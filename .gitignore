@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment Variables (Secrets)
+.env
+
+# Build Output
+dist/
+build/
+
+# IDE files
+.vscode/
+.DS_Store
