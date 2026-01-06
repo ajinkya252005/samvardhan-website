@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        // We are adding a new font called "bebas"
+        'bebas': ['"Bebas Neue"', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
