@@ -24,12 +24,17 @@ const Home = () => {
             <span className="text-teal-600">Purity</span>
           </h1>
           
-          {/* UPDATED: Icon Row (Hands, People, Heart) */}
-          <div className="my-8 flex items-center gap-6 text-green-600">
-             <FaHands size={50} />
-          </div>
-          <div className="my-8 flex items-center gap-6 text-green-800">
-             <FaUsers size={50} />
+          {/* UPDATED: Icon Row (Side by Side) */}
+          <div className="my-8 flex items-center gap-6">
+             {/* Icon 1: Hands */}
+             <div className="text-green-600">
+                <FaHands size={50} />
+             </div>
+             
+             {/* Icon 2: Users */}
+             <div className="text-green-800">
+                <FaUsers size={50} />
+             </div>
           </div>
 
           <p className="text-3xl text-gray-600 mb-8 max-w-1/2 leading-relaxed">
@@ -85,16 +90,16 @@ const Home = () => {
               <p className="text-gray-500 mt-2 font-medium">Cleanliness Drives</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">1000+</h3>
-              <p className="text-gray-500 mt-2 font-medium">Lives Impacted</p>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">400+</h3>
+              <p className="text-gray-500 mt-2 font-medium">Volunteers</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">1 Yr</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">2 Yr</h3>
               <p className="text-gray-500 mt-2 font-medium">Of Consistency</p>
             </div>
             <div className="p-4">
               <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">20+</h3>
-              <p className="text-gray-500 mt-2 font-medium">Partners</p>
+              <p className="text-gray-500 mt-2 font-medium">Community Drives</p>
             </div>
           </div>
         </div>
@@ -251,7 +256,7 @@ const Home = () => {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-6 relative z-10 font-ubuntu">Ready to make a difference?</h2>
           <p className="text-teal-100 mb-8 max-w-2xl mx-auto relative z-10">Join our community of changemakers today. Every small step counts.</p>
-          <Link to="/contact">
+          <Link to="https://docs.google.com/forms/d/e/1FAIpQLScF3U7Id6I9owmwjSenkC_PLINBXD2yB7jFDJiBAv69JVYiaA/viewform?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnZJ7BEvvlz68Tmo1FCHsQpDdJg2cMRXDw2DboJyNcFeqiR7R0sC-SljaKkmo_aem_xCOblVXQ2Z8nxpd7jrdB3w">
             <button className="bg-white text-teal-800 font-bold py-3 px-10 rounded-full hover:bg-gray-100 transition relative z-10 font-ubuntu shadow-md">
                 Get Involved
             </button>
