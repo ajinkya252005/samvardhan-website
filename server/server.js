@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const eventRoutes = require('./routes/eventRoutes');
+const photoRoutes = require('./routes/photoRoutes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/events', eventRoutes);
+app.use('/api/photos', photoRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5000;
