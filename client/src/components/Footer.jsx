@@ -65,7 +65,7 @@ const Footer = () => {
                     >
                         <SocialLink href="https://www.instagram.com/samvardhan_9/" icon={<FaInstagram />} color="hover:text-pink-600 hover:bg-pink-50" />
                         <SocialLink href="https://www.linkedin.com/company/samvardhan9/about/" icon={<FaLinkedin />} color="hover:text-blue-700 hover:bg-blue-50" />
-                        <SocialLink href="mailto:contact@samvardhan.org" icon={<FaEnvelope />} color="hover:text-red-600 hover:bg-red-50" />
+                        <SocialLink href="samvardhanpune@gmail.com" icon={<FaEnvelope />} color="hover:text-red-600 hover:bg-red-50" />
                     </motion.div>
                 </div>
 
