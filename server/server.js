@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const eventRoutes = require('./routes/eventRoutes');
 const photoRoutes = require('./routes/photoRoutes');
+const donationRoutes = require('./routes/donationRoutes');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/events', eventRoutes);
 app.use('/api/photos', photoRoutes);
+app.use('/api/donations', donationRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5000;

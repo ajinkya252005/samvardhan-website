@@ -24,14 +24,6 @@ const Home = () => {
             <span className="text-teal-600">Purity</span>
           </h1>
           
-<<<<<<< HEAD
-          {/* UPDATED: Icon Row (Hands, People, Heart) */}
-          <div className="my-8 flex items-center gap-6 text-green-600">
-             <FaHands size={50} />
-          </div>
-          <div className="my-8 flex items-center gap-6 text-green-800">
-             <FaUsers size={50} />
-=======
           {/* UPDATED: Icon Row (Side by Side) */}
           <div className="my-8 flex items-center gap-6">
              {/* Icon 1: Hands */}
@@ -43,7 +35,6 @@ const Home = () => {
              <div className="text-green-800">
                 <FaUsers size={50} />
              </div>
->>>>>>> origin/ajinkya
           </div>
 
           <p className="text-3xl text-gray-600 mb-8 max-w-1/2 leading-relaxed">

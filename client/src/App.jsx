@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 
 // Import Components
 import Navbar from './components/Navbar';
@@ -9,32 +9,50 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import OurWork from './pages/OurWork';
 import Gallery from './pages/Gallery';
-import Donation from './pages/Donation';
+import Donation from './pages/Donation'; // Matches your import
 import Contact from './pages/Contact';
+import Login from './pages/Login';
+import AdminDashboard from './pages/AdminDashboard';
+import ManageDonations from './pages/ManageDonations';
+import ManageEvents from './pages/ManageEvents';
+
+// --- Layout Component ---
+// This acts as a wrapper for pages that NEED the Navbar and Footer
+const PublicLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <div className="flex flex-col min-h-screen">
+        <Outlet /> {/* This renders the child page (Home, Gallery, etc.) */}
+      </div>
+      <Footer />
+    </>
+  );
+};
 
 function App() {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        
-        {/* Navbar stays at the top */}
-        <Navbar />
-
-        {/* Main Content Area - Adjusts for fixed navbar */}
-        <main className="flex-grow pt-16"> 
-          <Routes>
+    <Router><main className="flex-grow pt-16">
+       
+       <Routes>
+         
+          {/* --- Group 1: Public Pages (With Navbar & Footer) --- */}
+          <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/work" element={<OurWork />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/donate" element={<Donation />} />
             <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-
-        {/* Footer stays at the bottom */}
-        <Footer />
+            <Route path="/donate" element={<Donation />} />
+          </Route>
         
-      </div>
+
+          {/* --- Group 2: Admin Pages (NO Navbar/Footer) --- */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/donations" element={<ManageDonations />} />
+          <Route path="/admin/events" element={<ManageEvents />} />
+
+       </Routes></main>
     </Router>
   );
 }
