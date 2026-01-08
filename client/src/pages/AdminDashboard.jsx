@@ -39,7 +39,8 @@ const AdminDashboard = () => {
                     <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
                         <h3 className="text-xl font-bold mb-2">Manage Events</h3>
                         <p className="text-gray-600 mb-4">Add, edit, or delete timeline events in "Our Work".</p>
-                        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
+                        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full"
+                            onClick={() => navigate('/admin/events')}>
                             Go to Events
                         </button>
                     </div>
@@ -52,6 +53,19 @@ const AdminDashboard = () => {
                             Go to Gallery
                         </button>
                     </div>
+
+                    {/* Donation Management Card (Add this inside the grid-cols-2 div) */}
+                    <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-teal-500">
+                        <h3 className="text-xl font-bold mb-2">Verify Donations</h3>
+                        <p className="text-gray-600 mb-4">Check payment proofs and manage donor records.</p>
+                        <button 
+                            onClick={() => navigate('/admin/donations')}
+                            className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 w-full"
+                        >
+                            Go to Donations
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>

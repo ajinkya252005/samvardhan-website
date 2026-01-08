@@ -13,6 +13,8 @@ import Donation from './pages/Donation'; // Matches your import
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+import ManageDonations from './pages/ManageDonations';
+import ManageEvents from './pages/ManageEvents';
 
 // --- Layout Component ---
 // This acts as a wrapper for pages that NEED the Navbar and Footer
@@ -47,6 +49,8 @@ function App() {
           {/* --- Group 2: Admin Pages (NO Navbar/Footer) --- */}
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/donations" element={<ManageDonations />} />
+          <Route path="/admin/events" element={<ManageEvents />} />
 
        </Routes></main>
     </Router>
