@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import ManageDonations from './pages/ManageDonations';
 import ManageEvents from './pages/ManageEvents';
+import ManageGallery from './pages/ManageGallery';
 
 // --- Layout Component ---
 // This acts as a wrapper for pages that NEED the Navbar and Footer
@@ -51,6 +52,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/donations" element={<ManageDonations />} />
           <Route path="/admin/events" element={<ManageEvents />} />
+          <Route path="/admin/gallery" element={<ManageGallery />} />
 
        </Routes></main>
     </Router>

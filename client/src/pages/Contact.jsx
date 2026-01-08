@@ -22,8 +22,8 @@ const Contact = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold text-teal-800 mb-4">
-                        Contact Us
+                    <h1 className="text-4xl md:text-5xl font-bold text-grey-800 mb-4">
+                        Contact <span className="text-teal-600">Us</span>
                     </h1>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                         Reach out to us to learn more about our initiatives or to join hands in our mission for environmental conservation.
@@ -99,16 +99,19 @@ const Contact = () => {
                         </div>
 
                         {/* Box 2: Email Address */}
-                        <div className="bg-white p-10 rounded-3xl shadow-lg border border-teal-100 flex-1 flex flex-col justify-center relative overflow-hidden group">
+                        <div className="bg-white p-6 md:p-10 rounded-3xl shadow-lg border border-teal-100 flex-1 flex flex-col justify-center relative overflow-hidden group">
                             <div className="absolute bottom-0 left-0 w-32 h-32 bg-teal-50 rounded-full -ml-16 -mb-16 transition-transform group-hover:scale-150 duration-700 ease-in-out"></div>
 
-                            <div className="relative z-10 flex items-start gap-6">
-                                <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center text-2xl text-teal-600">
+                            <div className="relative z-10 flex items-start gap-4 md:gap-6">
+                                <div className="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center text-2xl text-teal-600 shrink-0">
                                     <FaEnvelope />
                                 </div>
-                                <div>
+                                <div className="min-w-0"> {/* min-w-0 allows text truncate/wrap control in flex children if needed */}
                                     <h3 className="text-2xl font-bold text-gray-800 mb-4">Email Us</h3>
-                                    <a href="mailto:samvardhan9@gmail.com" className="text-lg text-gray-600 hover:text-teal-700 font-medium transition-colors break-all">
+                                    <a 
+                                        href="mailto:samvardhan9@gmail.com" 
+                                        className="text-base md:text-lg text-gray-600 hover:text-teal-700 font-medium transition-colors whitespace-nowrap"
+                                    >
                                         samvardhan9@gmail.com
                                     </a>
                                     <p className="text-gray-400 text-sm mt-2">

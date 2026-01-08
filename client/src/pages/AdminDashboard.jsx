@@ -49,7 +49,10 @@ const AdminDashboard = () => {
                     <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-orange-500">
                         <h3 className="text-xl font-bold mb-2">Manage Gallery</h3>
                         <p className="text-gray-600 mb-4">Upload or remove photos from the Gallery.</p>
-                        <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 w-full">
+                        <button 
+                            onClick={() => navigate('/admin/gallery')}  // <--- Update this line
+                            className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 w-full"
+                        >
                             Go to Gallery
                         </button>
                     </div>
