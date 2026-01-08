@@ -22,8 +22,8 @@ const Contact = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold text-teal-800 mb-4">
-                        Contact Us
+                    <h1 className="text-4xl md:text-5xl font-bold text-grey-800 mb-4">
+                        Contact <span className="text-teal-600">Us</span>
                     </h1>
                     <p className="text-gray-600 text-lg max-w-2xl mx-auto">
                         Reach out to us to learn more about our initiatives or to join hands in our mission for environmental conservation.
