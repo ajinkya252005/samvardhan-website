@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Photo = require('../models/Photo');
+const upload = require('../config/cloudinary'); // Import Cloudinary config
 
 // 1. GET all photos (Sorted by newest first)
 router.get('/', async (req, res) => {
@@ -12,16 +13,21 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 2. POST a new photo (For Admin)
-router.post('/', async (req, res) => {
-    const { imageUrl, caption } = req.body;
-
-    const newPhoto = new Photo({
-        imageUrl,
-        caption
-    });
-
+// 2. POST a new photo (With Image Upload)
+// We use upload.single('image') to handle the file from the frontend
+router.post('/', upload.single('image'), async (req, res) => {
     try {
+        if (!req.file) {
+            return res.status(400).json({ message: "Image file is required" });
+        }
+
+        const { caption } = req.body;
+
+        const newPhoto = new Photo({
+            imageUrl: req.file.path, // Cloudinary URL from the uploaded file
+            caption
+        });
+
         const savedPhoto = await newPhoto.save();
         res.status(201).json(savedPhoto);
     } catch (err) {
@@ -29,7 +35,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 3. DELETE a photo (For Admin)
+// 3. DELETE a photo
 router.delete('/:id', async (req, res) => {
     try {
         await Photo.findByIdAndDelete(req.params.id);
