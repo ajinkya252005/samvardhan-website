@@ -172,7 +172,7 @@ const Home = () => {
                         </h3>
                         <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                             Senior Associate, Tanmayee Deshpande, reflects on personal experiences and urgent environmental concerns in her latest article.
-                            Let’s talk about climate resilience, infrastructure, and the need for collective action—before it’s too late.
+                            Let’s talk about climate resilience, infrastructure, and the need for collective action before it’s too late.
                         </p>
                         <a 
                             href="https://www.linkedin.com/posts/samvardhan9_rains-no-longer-bring-joy-activity-7330936905234108416-ScMw?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAELDIskBCFYw14vzJUJa_mwed8_Y3rS0Z5o" 
@@ -202,7 +202,7 @@ const Home = () => {
                             How garbage issue in Pune is sparking civic sense.
                         </h3>
                         <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                            Samvardhan is the story of young citizens re-claiming Pune's hills. Formed in August 2024 by a group of com-merce students, the initiative be-gan with cleaning hangout spots like ARAI, Law College tekdi, and Symbiosis Hill.
+                            Samvardhan is the story of young citizens reclaiming Pune's hills. Formed in August 2024 by a group of commerce students, the initiative began with cleaning hangout spots like ARAI, Law College tekdi, and Symbiosis Hill.
                         </p>
                         <a 
                             href="https://www.linkedin.com/posts/samvardhan9_proud-moment-for-samvardhan-grateful-activity-7379014083481829376--pln?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAELDIskBCFYw14vzJUJa_mwed8_Y3rS0Z5o" 
@@ -232,7 +232,7 @@ const Home = () => {
                             Rising heat, rising hope.
                         </h3>
                         <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                            Our planet is warming, and Pune is no exception. This insightful article by our associate Saurabh Godbole highlights the urgent climate challenges our city faces — and why collective action matters now more than ever.
+                            Our planet is warming, and Pune is no exception. This insightful article by our associate Saurabh Godbole highlights the urgent climate challenges our city faces and why collective action matters now more than ever.
                         </p>
                         <a 
                             href="https://www.linkedin.com/posts/samvardhan9_rising-heat-rising-hope-activity-7326104844027506690-2mjN?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAELDIskBCFYw14vzJUJa_mwed8_Y3rS0Z5o" 

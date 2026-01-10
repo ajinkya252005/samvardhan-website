@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-// 1. Added FaCamera to imports
-import { FaCalendarAlt, FaQuoteLeft, FaCamera, FaDigitalTachograph, FaDotCircle, FaTimesCircle } from 'react-icons/fa';
-import {GoGraph } from 'react-icons/go';
+import { FaCalendarAlt, FaLeaf, FaTree } from 'react-icons/fa';
+import { GoGraph } from 'react-icons/go';
 
 const OurWork = () => {
     const [events, setEvents] = useState([]);
@@ -35,35 +34,42 @@ const OurWork = () => {
 
     return (
         <div className="bg-[#FDF8F0] min-h-screen py-24 px-4 sm:px-6 lg:px-8 font-ubuntu overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
+            <div className="max-w-[1400px] mx-auto">
+                
+                {/* --- HEADER --- */}
                 <motion.div 
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-center mb-20"
+                    className="text-center mb-16 md:mb-24"
                 >
-                    {/* --- 2. NEW ORANGE HEADER ELEMENT --- */}
                     <div className="flex items-center justify-center gap-2 text-orange-500 mb-2">
                         <GoGraph size={25} />
                         <span className="uppercase tracking-widest font-bold text-xl">Timeline</span>
                     </div>
-                    {/* ------------------------------------ */}
 
                     <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">Our <span className="text-teal-600">Journey</span></h1>
                     <p className="text-xl text-teal-700 max-w-2xl mx-auto leading-relaxed">
-                        From our humble beginnings to our latest drives, here is how we've been making a difference step by step.
+                        Witnessing our growth, one event at a time.
                     </p>
                 </motion.div>
 
-                {/* --- TIMELINE SECTION --- */}
+                {/* --- TIMELINE CONTAINER --- */}
                 <div className="relative">
-                    {/* Central Spine Line */}
-                    <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-teal-200 via-teal-400 to-teal-200 rounded-full opacity-50"></div>
+                    
+                    {/* 1. TIMELINE LINE (Adaptive) */}
+                    
+                    {/* DESKTOP LINE (Center) */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1.5 bg-gradient-to-b from-teal-400 via-orange-300 to-teal-600 rounded-full z-0"></div>
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-4 bg-teal-400 opacity-20 blur-md z-0"></div>
 
-                    <div className="space-y-32 pb-20"> 
+                    {/* MOBILE LINE (Left Side) */}
+                    <div className="md:hidden absolute left-4 h-full w-1.5 bg-gradient-to-b from-teal-400 via-orange-300 to-teal-600 rounded-full z-0"></div>
+                    <div className="md:hidden absolute left-4 h-full w-4 bg-teal-400 opacity-20 blur-md z-0"></div>
+
+                    <div className="space-y-12 md:space-y-32 pb-20"> 
                         {events.length === 0 ? (
-                            <div className="text-center py-10 bg-white rounded-3xl shadow-xl p-10 relative z-10 border border-teal-50">
+                            <div className="text-center py-10">
                                 <p className="text-gray-400 text-lg">No events found in the archives.</p>
                             </div>
                         ) : (
@@ -78,79 +84,146 @@ const OurWork = () => {
     );
 };
 
-// --- INDIVIDUAL CARD COMPONENT ---
+// --- TIMELINE ITEM ---
 const TimelineItem = ({ event, index }) => {
-    const isLeft = index % 2 === 0;
+    const isEven = index % 2 === 0;
+    const year = new Date(event.date).getFullYear();
 
     return (
         <motion.div 
-            initial={{ opacity: 0, y: 100, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }} 
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className={`flex flex-col md:flex-row items-center w-full relative ${isLeft ? 'md:flex-row-reverse' : ''}`}
+            transition={{ duration: 0.6, ease: "easeOut" }}
         >
-            {/* 1. Date Bubble (Center Axis) */}
-            <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center z-20">
-                <div className="w-12 h-12 bg-teal-600 rounded-full border-4 border-[#FDF8F0] shadow-xl flex items-center justify-center text-white text-xs font-bold">
-                    {new Date(event.date).getFullYear()}
+            {/* =========================================
+                DESKTOP VIEW (Split Layout) - HIDDEN ON MOBILE
+               ========================================= */}
+            <div className="hidden md:grid md:grid-cols-9 items-center relative">
+                
+                {/* LEFT SIDE */}
+                <div className={`col-span-4 ${isEven ? 'text-right' : 'text-left'} order-1`}>
+                    {isEven ? (
+                        <PhotoCard imageUrl={event.imageUrl} title={event.title} align="right" />
+                    ) : (
+                        <TextCard event={event} align="left" />
+                    )}
+                </div>
+
+                {/* CENTER MARKER */}
+                <div className="col-span-1 flex justify-center items-center relative order-2">
+                    <div className="absolute top-1/2 w-full h-1 bg-teal-100 -z-10"></div>
+                    <YearMarker year={year} />
+                </div>
+
+                {/* RIGHT SIDE */}
+                <div className={`col-span-4 ${isEven ? 'text-left' : 'text-right'} order-3`}>
+                    {isEven ? (
+                        <TextCard event={event} align="right" />
+                    ) : (
+                        <PhotoCard imageUrl={event.imageUrl} title={event.title} align="left" />
+                    )}
                 </div>
             </div>
 
-            {/* 2. Spacer */}
-            <div className="hidden md:block w-1/2"></div>
-
-            {/* 3. The Poster Card */}
-            <div className={`w-full md:w-1/2 ${isLeft ? 'md:pr-16 pl-12' : 'md:pl-16 pl-12'}`}>
+            {/* =========================================
+                MOBILE VIEW (Merged Layout) - VISIBLE ON MOBILE
+               ========================================= */}
+            <div className="md:hidden flex gap-6 pl-2 relative">
                 
-                {/* Card Container */}
-                <div className="group relative w-full h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform duration-500 hover:-translate-y-3 hover:shadow-teal-900/20">
-                    
-                    {/* --- A. FULL BACKGROUND IMAGE --- */}
-                    <div className="absolute inset-0 w-full h-full bg-gray-200">
-                        <img 
-                            src={event.imageUrl} 
-                            alt={event.title} 
-                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                        />
-                        {/* Gradient Overlay for Readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-                    </div>
+                {/* LEFT MARKER (Aligned with Line) */}
+                <div className="flex-shrink-0 z-10 pt-8"> {/* pt-8 aligns marker with top of card somewhat */}
+                     <YearMarker year={year} small />
+                </div>
 
-                    {/* --- B. CONTENT OVERLAY (Glassmorphism) --- */}
-                    <div className="absolute bottom-0 left-0 w-full p-8 md:p-10 flex flex-col justify-end h-full">
-                        
-                        <motion.div 
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                        >
+                {/* RIGHT CARD (Merged Photo + Text) */}
+                <div className="flex-grow">
+                    <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-teal-50 transform transition-all hover:scale-[1.02]">
+                        {/* Image Top */}
+                        <div className="w-full h-48 sm:h-64 relative">
+                            <img 
+                                src={event.imageUrl} 
+                                alt={event.title}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60"></div>
+                        </div>
+
+                        {/* Content Bottom */}
+                        <div className="p-6 relative">
                             {/* Date Badge */}
-                            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-white/90 text-sm font-bold mb-4 border border-white/10">
-                                <FaCalendarAlt className="text-orange-400"/>
-                                <span>{new Date(event.date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                            <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                                <FaCalendarAlt />
+                                <span>{new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                             </div>
 
-                            {/* Title */}
-                            <h3 className="text-4xl md:text-5xl font-bebas text-white mb-4 tracking-wider leading-none drop-shadow-lg">
+                            <h3 className="text-2xl font-bold text-teal-800 mb-3 leading-tight">
                                 {event.title}
                             </h3>
 
-                            {/* Description (Scrollable if too long) */}
-                            <div className="relative">
-                                <FaQuoteLeft className="text-orange-500/50 text-2xl absolute -top-2 -left-2" />
-                                <p className="text-gray-200 text-lg leading-relaxed font-light pl-6 line-clamp-4 group-hover:line-clamp-none transition-all duration-300">
-                                    {event.description}
-                                </p>
-                            </div>
-                        </motion.div>
+                            <p className="text-gray-600 text-sm leading-relaxed">
+                                {event.description}
+                            </p>
+                        </div>
                     </div>
-
-                    {/* Shine Effect on Hover */}
-                    <div className="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
                 </div>
             </div>
+
         </motion.div>
+    );
+};
+
+// --- COMPONENT: YEAR MARKER ---
+const YearMarker = ({ year, small }) => (
+    <div className="relative group cursor-pointer z-10">
+        <div className={`${small ? 'w-14 h-14 border-[3px]' : 'w-20 h-20 border-[5px]'} bg-white border-teal-500 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(20,184,166,0.6)] transition-all duration-300 group-hover:scale-110 group-hover:border-orange-500`}>
+            <div className="flex flex-col items-center leading-none">
+                <span className={`${small ? 'text-[8px]' : 'text-xs'} text-gray-400 font-bold uppercase tracking-wider mb-0.5 group-hover:text-orange-400`}></span>
+                <span className={`${small ? 'text-sm' : 'text-xl'} font-black text-teal-700 font-ubuntu group-hover:text-orange-600`}>
+                    {year}
+                </span>
+            </div>
+        </div>
+        <div className="absolute inset-0 border-4 border-teal-300 rounded-full animate-ping opacity-30"></div>
+    </div>
+);
+
+// --- COMPONENT: PHOTO CARD (Desktop) ---
+const PhotoCard = ({ imageUrl, title, align }) => {
+    return (
+        <div className={`relative group w-full flex ${align === 'right' ? 'justify-end' : 'justify-start'} justify-center`}>
+            <div className="bg-white p-3 pb-8 shadow-2xl rounded-sm transform transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 rotate-0 max-w-lg w-full border border-gray-100">
+                <div className="overflow-hidden bg-gray-100 w-full h-auto border border-gray-200 shadow-inner">
+                    <img src={imageUrl} alt={title} className="w-full h-auto object-contain block" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- COMPONENT: TEXT CARD (Desktop) ---
+const TextCard = ({ event, align }) => {
+    return (
+        <div className={`flex ${align === 'right' ? 'justify-start' : 'justify-end'} justify-center w-full`}>
+            <div className={`
+                bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl border border-teal-50 
+                max-w-lg w-full relative transition-all duration-300 hover:-translate-y-2
+                ${align === 'left' ? 'text-right' : 'text-left'}
+            `}>
+                <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-white transform rotate-45 
+                    ${align === 'left' ? '-right-3 border-r border-t border-teal-50' : '-left-3 border-l border-b border-teal-50'}
+                `}></div>
+
+                <div className={`flex flex-col ${align === 'left' ? 'items-end' : 'items-start'}`}>
+                    <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 shadow-sm">
+                        <FaCalendarAlt />
+                        <span>{new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    </div>
+                    <h3 className="text-3xl font-bold text-teal-800 mb-4 leading-tight">{event.title}</h3>
+                    <p className="text-gray-600 text-lg leading-relaxed font-light">{event.description}</p>
+                </div>
+            </div>
+        </div>
     );
 };
 
