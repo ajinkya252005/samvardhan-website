@@ -122,7 +122,7 @@ const Home = () => {
             <h4 className="text-orange-500 font-bold tracking-widest uppercase mb-2 font-ubuntu">Who We Are</h4>
             <h2 className="text-4xl font-bold text-gray-900 mb-6 font-ubuntu">An organization <br/> For the people, by the people</h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              Through our cleanliness drives, community support, and sustainable initiatives, we've worked towards a better world. This is just the beginning—join us in shaping a future where every space is clean, and every person is cared for.
+              Through our cleanliness drives, community support, and sustainable initiatives, we've worked towards a better world. This is just the beginning join us in shaping a future where every space is clean, and every person is cared for.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4">
