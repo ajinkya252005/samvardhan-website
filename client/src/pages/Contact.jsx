@@ -7,7 +7,7 @@ import directorImg from '../assets/director.jpeg';
 
 const Contact = () => {
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 pb-12 font-ubuntu relative overflow-hidden">
+        <div className="min-h-screen bg-[#FDF8F0] pt-24 pb-12 font-ubuntu relative overflow-hidden">
             
             {/* Background Decorative Blobs */}
             <div className="absolute top-20 left-0 w-96 h-96 bg-teal-100/40 blur-3xl rounded-full -z-10" />

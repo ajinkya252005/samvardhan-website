@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaArrowLeft, FaTrash, FaCalendarPlus, FaImage } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowLeft, FaTrash, FaCalendarAlt, FaAlignLeft, FaImage, FaPlusCircle, FaClock, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const ManageEvents = () => {
@@ -15,6 +16,7 @@ const ManageEvents = () => {
         description: ''
     });
     const [imageFile, setImageFile] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
 
     // Fetch Events
     const fetchEvents = async () => {
@@ -37,7 +39,11 @@ const ManageEvents = () => {
 
     // Handle File Change
     const handleFileChange = (e) => {
-        setImageFile(e.target.files[0]);
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setPreviewUrl(URL.createObjectURL(file));
+        }
     };
 
     // --- ADD EVENT ---
@@ -53,15 +59,17 @@ const ManageEvents = () => {
             data.append('description', newEvent.description);
             data.append('image', imageFile);
 
-            // FIX: Removed the manual 'headers' object. Let Axios handle it!
             await axios.post('http://localhost:5000/api/events', data);
 
-            // Reset Form and Reload List
+            // Reset Form
             setNewEvent({ title: '', date: '', description: '' });
             setImageFile(null);
-            setSubmitting(false);
+            setPreviewUrl(null);
+            
+            // Reload & UI Feedback
             fetchEvents();
-            alert("Event Added Successfully!");
+            setSubmitting(false);
+            alert("Event Published Successfully!");
 
         } catch (err) {
             console.error(err);
@@ -72,96 +80,211 @@ const ManageEvents = () => {
 
     // --- DELETE EVENT ---
     const handleDelete = async (id) => {
-        if(!window.confirm("Are you sure you want to delete this event?")) return;
+        if(!window.confirm("Are you sure you want to delete this event? This action cannot be undone.")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/events/${id}`);
+            // Optimistic Update
             setEvents(events.filter(e => e._id !== id));
+            await axios.delete(`http://localhost:5000/api/events/${id}`);
         } catch (err) {
             console.error(err);
             alert("Failed to delete event.");
+            fetchEvents(); // Revert
         }
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 font-ubuntu p-8">
-            <div className="max-w-6xl mx-auto mb-8 flex items-center gap-4">
-                <Link to="/admin" className="p-2 bg-white rounded-full shadow hover:bg-gray-200 transition">
-                    <FaArrowLeft className="text-gray-600" />
-                </Link>
-                <h1 className="text-3xl font-bold text-gray-800">Manage Timeline</h1>
-            </div>
+        <div className="min-h-screen bg-gray-50 font-ubuntu relative overflow-hidden">
+            
+            {/* Background Blobs */}
+            <div className="absolute top-20 left-20 w-96 h-96 bg-blue-100/50 rounded-full blur-3xl -z-10"></div>
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-teal-100/50 rounded-full blur-3xl -z-10"></div>
 
-            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="max-w-7xl mx-auto p-6 md:p-10">
                 
-                {/* --- LEFT: Add Event Form --- */}
-                <div className="bg-white p-6 rounded-xl shadow-md h-fit">
-                    <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                        <FaCalendarPlus className="text-teal-600"/> Add New Event
-                    </h2>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                {/* --- Header --- */}
+                <div className="flex items-center justify-between mb-10">
+                    <div className="flex items-center gap-4">
+                        <Link to="/admin" className="p-3 bg-white border border-gray-200 rounded-full shadow-sm hover:shadow-md hover:bg-teal-50 transition text-gray-600 hover:text-teal-700">
+                            <FaArrowLeft />
+                        </Link>
                         <div>
-                            <label className="block text-sm font-bold text-gray-600 mb-1">Event Title</label>
-                            <input type="text" name="title" required
-                                value={newEvent.title} onChange={handleChange}
-                                className="w-full border rounded p-2 focus:ring-2 focus:ring-teal-500 outline-none"
-                            />
+                            <h1 className="text-3xl font-bold text-gray-800">Timeline Manager</h1>
+                            <p className="text-gray-500 text-sm">Update the 'Our Work' timeline with new initiatives.</p>
                         </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-600 mb-1">Date</label>
-                            <input type="date" name="date" required
-                                value={newEvent.date} onChange={handleChange}
-                                className="w-full border rounded p-2 focus:ring-2 focus:ring-teal-500 outline-none"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-600 mb-1">Description</label>
-                            <textarea name="description" rows="3" required
-                                value={newEvent.description} onChange={handleChange}
-                                className="w-full border rounded p-2 focus:ring-2 focus:ring-teal-500 outline-none"
-                            ></textarea>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-bold text-gray-600 mb-1">Cover Image</label>
-                            <div className="flex items-center gap-2 border p-2 rounded bg-gray-50">
-                                <FaImage className="text-gray-400" />
-                                <input type="file" accept="image/*" onChange={handleFileChange} className="text-sm w-full" />
-                            </div>
-                        </div>
-                        <button 
-                            type="submit" 
-                            disabled={submitting}
-                            className="w-full bg-teal-600 text-white font-bold py-2 rounded hover:bg-teal-700 transition disabled:bg-gray-400"
-                        >
-                            {submitting ? "Uploading..." : "Publish Event"}
-                        </button>
-                    </form>
+                    </div>
                 </div>
 
-                {/* --- RIGHT: Existing Events List --- */}
-                <div className="lg:col-span-2 space-y-4">
-                    <h2 className="text-xl font-bold text-gray-800">Existing Events</h2>
-                    {loading ? <p>Loading...</p> : events.length === 0 ? <p className="text-gray-500">No events found.</p> : (
-                        events.map(event => (
-                            <div key={event._id} className="bg-white p-4 rounded-xl shadow flex gap-4 items-start">
-                                <img src={event.imageUrl} alt={event.title} className="w-24 h-24 object-cover rounded-lg bg-gray-200" />
-                                <div className="flex-1">
-                                    <div className="flex justify-between items-start">
-                                        <h3 className="font-bold text-lg text-teal-800">{event.title}</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    
+                    {/* --- LEFT: Create Event Form --- */}
+                    <div className="lg:col-span-5 lg:sticky lg:top-10">
+                        <motion.div 
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden"
+                        >
+                            <div className="bg-gradient-to-br from-teal-600 to-teal-800 p-6 text-white relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-4 opacity-10">
+                                    <FaCalendarAlt size={100} />
+                                </div>
+                                <h2 className="text-xl font-bold flex items-center gap-2 relative z-10">
+                                    <FaPlusCircle /> Add New Event
+                                </h2>
+                                <p className="text-teal-100 text-xs mt-1 relative z-10">Fill in the details to publish to the timeline.</p>
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+                                
+                                {/* 1. Title Input */}
+                                <div>
+                                    <label className="block text-gray-700 text-sm font-bold mb-2 ml-1">Event Title</label>
+                                    <input 
+                                        type="text" 
+                                        name="title" 
+                                        required
+                                        placeholder="e.g. Mega Cleanliness Drive"
+                                        value={newEvent.title} 
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:bg-white transition-all font-medium"
+                                    />
+                                </div>
+
+                                {/* 2. Date Input */}
+                                <div>
+                                    <label className="block text-gray-700 text-sm font-bold mb-2 ml-1">Event Date</label>
+                                    <div className="relative">
+                                        <FaClock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                                        <input 
+                                            type="date" 
+                                            name="date" 
+                                            required
+                                            value={newEvent.date} 
+                                            onChange={handleChange}
+                                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:bg-white transition-all font-medium text-gray-600"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* 3. Description Input */}
+                                <div>
+                                    <label className="block text-gray-700 text-sm font-bold mb-2 ml-1">Description</label>
+                                    <div className="relative">
+                                        <FaAlignLeft className="absolute left-4 top-4 text-gray-400" />
+                                        <textarea 
+                                            name="description" 
+                                            rows="4" 
+                                            required
+                                            placeholder="Summarize the impact of this event..."
+                                            value={newEvent.description} 
+                                            onChange={handleChange}
+                                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:bg-white transition-all font-medium resize-none"
+                                        ></textarea>
+                                    </div>
+                                </div>
+
+                                {/* 4. Image Upload */}
+                                <div>
+                                    <label className="block text-gray-700 text-sm font-bold mb-2 ml-1">Cover Image</label>
+                                    <label className={`
+                                        flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer transition-all duration-300 relative overflow-hidden
+                                        ${previewUrl ? 'border-teal-500 bg-white' : 'border-gray-300 bg-gray-50 hover:bg-gray-100'}
+                                    `}>
+                                        {previewUrl ? (
+                                            <>
+                                                <img src={previewUrl} alt="Preview" className="w-full h-full object-cover opacity-80" />
+                                                <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white font-bold text-sm">
+                                                    Click to Change
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <div className="text-center text-gray-400">
+                                                <FaImage className="text-3xl mx-auto mb-2" />
+                                                <span className="text-sm font-medium">Upload Cover</span>
+                                            </div>
+                                        )}
+                                        <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                                    </label>
+                                </div>
+
+                                <motion.button 
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    type="submit" 
+                                    disabled={submitting}
+                                    className="w-full bg-teal-600 text-white font-bold py-3.5 rounded-xl hover:bg-teal-700 transition shadow-lg shadow-teal-200 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                >
+                                    {submitting ? "Publishing..." : "Publish Event"} <FaCheckCircle />
+                                </motion.button>
+                            </form>
+                        </motion.div>
+                    </div>
+
+                    {/* --- RIGHT: Existing Events List --- */}
+                    <div className="lg:col-span-7 space-y-6">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-xl font-bold text-gray-800">Timeline History</h2>
+                            <span className="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">
+                                {events.length} Events
+                            </span>
+                        </div>
+
+                        {loading ? (
+                            <div className="space-y-4">
+                                {[1,2,3].map(i => <div key={i} className="h-32 bg-gray-200 rounded-2xl animate-pulse"></div>)}
+                            </div>
+                        ) : events.length === 0 ? (
+                            <div className="bg-white p-10 rounded-3xl text-center border border-dashed border-gray-300">
+                                <p className="text-gray-400 font-bold">Timeline is empty.</p>
+                            </div>
+                        ) : (
+                            <AnimatePresence>
+                                {events.map((event) => (
+                                    <motion.div 
+                                        layout
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, x: -100 }}
+                                        key={event._id} 
+                                        className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-5 items-start relative group"
+                                    >
+                                        {/* Image */}
+                                        <div className="w-full sm:w-32 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
+                                            <img src={event.imageUrl} alt={event.title} className="w-full h-full object-cover" />
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="flex-1 pr-10">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className="bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                                                    {new Date(event.date).getFullYear()}
+                                                </span>
+                                                <span className="text-xs text-gray-400 font-bold">
+                                                    {new Date(event.date).toLocaleDateString(undefined, { month: 'long', day: 'numeric' })}
+                                                </span>
+                                            </div>
+                                            <h3 className="text-lg font-bold text-gray-800 leading-tight mb-2">
+                                                {event.title}
+                                            </h3>
+                                            <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">
+                                                {event.description}
+                                            </p>
+                                        </div>
+
+                                        {/* Delete Button (Absolute) */}
                                         <button 
                                             onClick={() => handleDelete(event._id)}
-                                            className="text-red-500 hover:text-red-700 p-2"
+                                            className="absolute top-4 right-4 text-gray-300 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-all"
+                                            title="Delete Event"
                                         >
                                             <FaTrash />
                                         </button>
-                                    </div>
-                                    <p className="text-xs text-gray-500 font-bold mb-1">{new Date(event.date).toDateString()}</p>
-                                    <p className="text-sm text-gray-600 line-clamp-2">{event.description}</p>
-                                </div>
-                            </div>
-                        ))
-                    )}
-                </div>
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        )}
+                    </div>
 
+                </div>
             </div>
         </div>
     );
