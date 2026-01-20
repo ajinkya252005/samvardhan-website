@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { FaTimes, FaCamera, FaChevronLeft, FaChevronRight, FaDownload, FaExpand } from 'react-icons/fa';
 
@@ -100,7 +100,7 @@ const Gallery = () => {
     useEffect(() => {
         const fetchPhotos = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/photos');
+                const res = await api.get('/photos');
                 setPhotos(res.data);
                 setLoading(false);
             } catch (err) {

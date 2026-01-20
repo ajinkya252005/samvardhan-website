@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaTrash, FaCloudUploadAlt, FaImages, FaPen, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const ManageGallery = () => {
     // Fetch Photos
     const fetchPhotos = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/photos');
+            const res = await api.get('/photos');
             setPhotos(res.data);
             setLoading(false);
         } catch (err) {
@@ -48,7 +48,7 @@ const ManageGallery = () => {
             data.append('image', imageFile);
             data.append('caption', caption);
 
-            await axios.post('http://localhost:5000/api/photos', data);
+            await api.post('/photos', data);
 
             // Reset Form
             setCaption('');
@@ -72,7 +72,7 @@ const ManageGallery = () => {
         try {
             // Optimistic UI Update: Remove immediately from UI
             setPhotos(photos.filter(p => p._id !== id));
-            await axios.delete(`http://localhost:5000/api/photos/${id}`);
+            await api.delete('/photos/' + id);
         } catch (err) {
             alert("Failed to delete photo.");
             fetchPhotos(); // Revert if failed

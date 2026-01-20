@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { FaLock, FaUser, FaArrowLeft, FaHandHoldingHeart } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -21,7 +21,7 @@ const Login = () => {
         setError('');
 
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', {
+            const res = await api.post('/auth/login', {
                 username,
                 password
             });

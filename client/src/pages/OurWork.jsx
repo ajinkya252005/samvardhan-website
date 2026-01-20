@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { FaCalendarAlt, FaQuoteRight } from 'react-icons/fa';
 import { GoGraph } from 'react-icons/go';
@@ -21,7 +21,7 @@ const OurWork = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/events');
+                const res = await api.get('/events');
                 setEvents(res.data);
                 setLoading(false);
             } catch (err) {
