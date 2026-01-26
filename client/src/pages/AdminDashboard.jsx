@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { 
     FaSignOutAlt, FaCalendarAlt, FaImages, FaHandHoldingHeart, 
-    FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle 
+    FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle,FaPenNib 
 } from 'react-icons/fa';
 
 const AdminDashboard = () => {
@@ -163,6 +163,16 @@ const AdminDashboard = () => {
                             icon={<FaImages className="text-4xl text-orange-500 group-hover:scale-110 transition duration-300" />}
                             path="/admin/gallery"
                             actionText="Update Gallery"
+                            navigate={navigate}
+                        />
+
+                        {/* 4. Manage Blogs (NEW) */}
+                        <DashboardCard 
+                            title="Blog Articles"
+                            desc="Share insights and external article links."
+                            icon={<FaPenNib className="text-4xl text-purple-500 group-hover:scale-110 transition duration-300" />}
+                            path="/admin/blogs"
+                            actionText="Manage Blogs"
                             navigate={navigate}
                         />
                     </div>

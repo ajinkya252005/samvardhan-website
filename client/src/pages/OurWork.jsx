@@ -88,7 +88,7 @@ const OurWork = () => {
                         {/* The Filling Gradient Line - UPDATED GRADIENT */}
                         <motion.div 
                             style={{ height: lineHeight }}
-                            className="w-full bg-gradient-to-b from-teal-600 via-gray-200 to-teal-700 rounded-full shadow-[0_0_15px_rgba(20,184,166,0.5)]"
+                            className="w-full bg-gradient-to-b from-teal-600 via-teal-500 to-teal-700 rounded-full shadow-[0_0_15px_rgba(20,184,166,0.5)]"
                         />
                     </div>
 
@@ -97,7 +97,7 @@ const OurWork = () => {
                         {/* UPDATED GRADIENT FOR MOBILE */}
                         <motion.div 
                             style={{ height: lineHeight }}
-                            className="w-full bg-gradient-to-b from-teal-600 via-gray-200 to-teal-700 rounded-full shadow-[0_0_10px_rgba(20,184,166,0.3)]"
+                            className="w-full bg-gradient-to-b from-teal-600 via teal-500 to-teal-600 rounded-full shadow-[0_0_10px_rgba(20,184,166,0.3)]"
                         />
                     </div>
 
@@ -275,7 +275,7 @@ const YearMarker = ({ year, small }) => (
             </div>
         </div>
         {/* Glowing Pulse Behind */}
-        <div className="absolute inset-0 bg-teal-400 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 animate-pulse"></div>
+        <div className="absolute inset-0 bg-teal-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-500 animate-pulse"></div>
     </motion.div>
 );
 

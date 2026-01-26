@@ -16,6 +16,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import ManageDonations from './pages/ManageDonations';
 import ManageEvents from './pages/ManageEvents';
 import ManageGallery from './pages/ManageGallery';
+import Blogs from './pages/Blogs';
+import ManageBlogs from './pages/ManageBlogs';
 
 // --- Layout Component ---
 // This acts as a wrapper for pages that NEED the Navbar and Footer
@@ -44,6 +46,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/donate" element={<Donation />} />
+            <Route path="/blogs" element={<Blogs />} />  {/* <--- ADD THIS */}
           </Route>
         
 
@@ -53,6 +56,7 @@ function App() {
           <Route path="/admin/donations" element={<ManageDonations />} />
           <Route path="/admin/events" element={<ManageEvents />} />
           <Route path="/admin/gallery" element={<ManageGallery />} />
+          <Route path="/admin/blogs" element={<ManageBlogs />} />  {/* <--- ADD THIS */}
 
        </Routes></main>
     </Router>
