@@ -86,19 +86,19 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">50+</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">10+</h3>
               <p className="text-gray-500 mt-2 font-medium">Cleanliness Drives</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">400+</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">500+</h3>
               <p className="text-gray-500 mt-2 font-medium">Volunteers</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">2 Yr</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">1 Yr</h3>
               <p className="text-gray-500 mt-2 font-medium">Of Consistency</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">20+</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">5+</h3>
               <p className="text-gray-500 mt-2 font-medium">Community Drives</p>
             </div>
           </div>
@@ -245,6 +245,16 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            {/* --- NEW: Read Blogs Button --- */}
+            <div className="text-center mt-12">
+                <Link to="/blogs">
+                    <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-orange-200 transition-all transform hover:-translate-y-1 flex items-center gap-2 mx-auto font-ubuntu">
+                        Read Our Blogs <FaArrowRight />
+                    </button>
+                </Link>
+            </div>
+            {/* ------------------------------- */}
+            
         </div>
       </div>
       

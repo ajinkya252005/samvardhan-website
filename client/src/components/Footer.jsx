@@ -28,11 +28,11 @@ const Footer = () => {
                                 className="h-16 w-auto transition-transform group-hover:scale-105" 
                             />
                             <div>
-                                <h2 className="text-3xl font-bold text-teal-800 tracking-wide">
+                                <h2 className="text-4xl font-bold text-teal-800 tracking-wide">
                                     संवर्धन
                                 </h2>
-                                <p className="text-teal-600/80 text-sm font-medium mt-1">
-                                    Empowering Environmental Conservation and Community Welfare
+                                <p className="text-teal-600/80 text-2xl font-medium mt-1">
+                                    Preserving Purity
                                 </p>
                             </div>
                         </Link>
@@ -65,7 +65,7 @@ const Footer = () => {
                     >
                         <SocialLink href="https://www.instagram.com/samvardhan_9/" icon={<FaInstagram />} color="hover:text-pink-600 hover:bg-pink-50" />
                         <SocialLink href="https://www.linkedin.com/company/samvardhan9/about/" icon={<FaLinkedin />} color="hover:text-blue-700 hover:bg-blue-50" />
-                        <SocialLink href="samvardhan9@gmail.com" icon={<FaEnvelope />} color="hover:text-red-600 hover:bg-red-50" />
+                        <SocialLink href="samvardhan999@gmail.com" icon={<FaEnvelope />} color="hover:text-red-600 hover:bg-red-50" />
                     </motion.div>
                 </div>
 

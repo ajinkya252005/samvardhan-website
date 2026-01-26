@@ -7,6 +7,7 @@ const eventRoutes = require('./routes/eventRoutes');
 const photoRoutes = require('./routes/photoRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const authRoutes = require('./routes/authRoutes');
+const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/events', eventRoutes);
 app.use('/api/photos', photoRoutes);
 app.use('/api/donations', donationRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/blogs', blogRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5000;

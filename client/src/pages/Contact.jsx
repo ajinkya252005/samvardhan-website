@@ -87,11 +87,11 @@ const Contact = () => {
                                 <div>
                                     <h3 className="text-2xl font-bold mb-4">Call Us</h3>
                                     <div className="flex flex-col space-y-3 text-lg font-medium text-teal-50">
-                                        <a href="tel:+917058049682" className="hover:text-white hover:translate-x-1 transition-all">
-                                            +91 70580 49682
+                                        <a href="tel:+919028636288" className="hover:text-white hover:translate-x-1 transition-all">
+                                            +91 90286 36288
                                         </a>
-                                        <a href="tel:+919049552446" className="hover:text-white hover:translate-x-1 transition-all">
-                                            +91 90495 52446
+                                        <a href="tel:+917620334946" className="hover:text-white hover:translate-x-1 transition-all">
+                                            +91 76203 34946
                                         </a>
                                     </div>
                                 </div>
@@ -109,10 +109,10 @@ const Contact = () => {
                                 <div className="min-w-0"> {/* min-w-0 allows text truncate/wrap control in flex children if needed */}
                                     <h3 className="text-2xl font-bold text-gray-800 mb-4">Email Us</h3>
                                     <a 
-                                        href="mailto:samvardhan9@gmail.com" 
+                                        href="mailto:samvardhan999@gmail.com" 
                                         className="text-base md:text-lg text-gray-600 hover:text-teal-700 font-medium transition-colors whitespace-nowrap"
                                     >
-                                        samvardhan9@gmail.com
+                                        samvardhan999@gmail.com
                                     </a>
                                     <p className="text-gray-400 text-sm mt-2">
                                         Drop us a mail for collaborations or queries.
