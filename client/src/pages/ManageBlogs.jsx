@@ -22,7 +22,7 @@ const ManageBlogs = () => {
     // Fetch Blogs
     const fetchBlogs = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/blogs');
+            const res = await axios.get('${API_URL}/api/blogs');
             setBlogs(res.data);
             setLoading(false);
         } catch (err) {
@@ -58,7 +58,7 @@ const ManageBlogs = () => {
             data.append('link', newBlog.link);
             data.append('image', imageFile);
 
-            await axios.post('http://localhost:5000/api/blogs', data);
+            await axios.post('${API_URL}/api/blogs', data);
 
             setNewBlog({ title: '', date: '', description: '', link: '' });
             setImageFile(null);
@@ -78,7 +78,7 @@ const ManageBlogs = () => {
         if(!window.confirm("Delete this blog?")) return;
         try {
             setBlogs(blogs.filter(b => b._id !== id));
-            await axios.delete(`http://localhost:5000/api/blogs/${id}`);
+            await axios.delete(`${API_URL}/api/blogs/${id}`);
         } catch (err) {
             alert("Failed to delete.");
             fetchBlogs();

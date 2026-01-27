@@ -15,7 +15,7 @@ const ManageDonations = () => {
 
     const fetchDonations = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/donations');
+            const res = await axios.get('${API_URL}/api/donations');
             setDonations(res.data);
             setLoading(false);
         } catch (err) {
@@ -29,7 +29,7 @@ const ManageDonations = () => {
         if(!window.confirm("Are you sure you want to verify this donation?")) return;
 
         try {
-            await axios.put(`http://localhost:5000/api/donations/${id}/verify`);
+            await axios.put(`${API_URL}/api/donations/${id}/verify`);
             
             // Update UI instantly (Optimistic Update)
             setDonations(donations.map(d => 

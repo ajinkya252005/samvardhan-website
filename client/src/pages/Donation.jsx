@@ -56,7 +56,7 @@ const Donation = () => {
             data.append('amount', formData.amount);
             data.append('screenshot', screenshot); 
 
-            const res = await axios.post('http://localhost:5000/api/donations', data, {
+            const res = await axios.post('${API_URL}/api/donations', data, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 

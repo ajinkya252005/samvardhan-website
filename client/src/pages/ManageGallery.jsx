@@ -17,7 +17,7 @@ const ManageGallery = () => {
     // Fetch Photos
     const fetchPhotos = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/photos');
+            const res = await axios.get('${API_URL}/api/photos');
             setPhotos(res.data);
             setLoading(false);
         } catch (err) {
@@ -48,7 +48,7 @@ const ManageGallery = () => {
             data.append('image', imageFile);
             data.append('caption', caption);
 
-            await axios.post('http://localhost:5000/api/photos', data);
+            await axios.post('${API_URL}/api/photos', data);
 
             // Reset Form
             setCaption('');
@@ -72,7 +72,7 @@ const ManageGallery = () => {
         try {
             // Optimistic UI Update: Remove immediately from UI
             setPhotos(photos.filter(p => p._id !== id));
-            await axios.delete(`http://localhost:5000/api/photos/${id}`);
+            await axios.delete(`${API_URL}/api/photos/${id}`);
         } catch (err) {
             alert("Failed to delete photo.");
             fetchPhotos(); // Revert if failed

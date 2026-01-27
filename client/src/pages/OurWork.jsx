@@ -21,7 +21,7 @@ const OurWork = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/events');
+                const res = await axios.get('${API_URL}/api/events');
                 setEvents(res.data);
                 setLoading(false);
             } catch (err) {

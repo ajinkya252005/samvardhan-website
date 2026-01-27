@@ -21,7 +21,7 @@ const ManageEvents = () => {
     // Fetch Events
     const fetchEvents = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/events');
+            const res = await axios.get('${API_URL}/api/events');
             setEvents(res.data);
             setLoading(false);
         } catch (err) {
@@ -59,7 +59,7 @@ const ManageEvents = () => {
             data.append('description', newEvent.description);
             data.append('image', imageFile);
 
-            await axios.post('http://localhost:5000/api/events', data);
+            await axios.post('${API_URL}/api/events', data);
 
             // Reset Form
             setNewEvent({ title: '', date: '', description: '' });
@@ -84,7 +84,7 @@ const ManageEvents = () => {
         try {
             // Optimistic Update
             setEvents(events.filter(e => e._id !== id));
-            await axios.delete(`http://localhost:5000/api/events/${id}`);
+            await axios.delete(`${API_URL}/api/events/${id}`);
         } catch (err) {
             console.error(err);
             alert("Failed to delete event.");
