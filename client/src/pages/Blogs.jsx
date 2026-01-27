@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FaPenNib, FaExternalLinkAlt, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
+import API_URL from '../config';
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -10,7 +11,7 @@ const Blogs = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const res = await axios.get('${API_URL}/api/blogs');
+                const res = await axios.get(`${API_URL}/api/blogs`);
                 setBlogs(res.data);
                 setLoading(false);
             } catch (err) {

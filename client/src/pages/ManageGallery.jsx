@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaTrash, FaCloudUploadAlt, FaImages, FaPen, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import API_URL from '../config';
 
 const ManageGallery = () => {
     const [photos, setPhotos] = useState([]);
@@ -17,7 +18,7 @@ const ManageGallery = () => {
     // Fetch Photos
     const fetchPhotos = async () => {
         try {
-            const res = await axios.get('${API_URL}/api/photos');
+            const res = await axios.get(`${API_URL}/api/photos`);
             setPhotos(res.data);
             setLoading(false);
         } catch (err) {
@@ -48,7 +49,7 @@ const ManageGallery = () => {
             data.append('image', imageFile);
             data.append('caption', caption);
 
-            await axios.post('${API_URL}/api/photos', data);
+            await axios.post(`${API_URL}/api/photos`, data);
 
             // Reset Form
             setCaption('');

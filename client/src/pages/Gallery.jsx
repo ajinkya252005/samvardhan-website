@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { FaTimes, FaCamera, FaChevronLeft, FaChevronRight, FaDownload, FaExpand } from 'react-icons/fa';
+import API_URL from '../config';
 
 // --- 3D TILT CARD COMPONENT (The "Wow" Factor) ---
 const TiltCard = ({ children, onClick, index }) => {
@@ -100,7 +101,7 @@ const Gallery = () => {
     useEffect(() => {
         const fetchPhotos = async () => {
             try {
-                const res = await axios.get('${API_URL}/api/photos');
+                const res = await axios.get(`${API_URL}/api/photos`);
                 setPhotos(res.data);
                 setLoading(false);
             } catch (err) {

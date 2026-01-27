@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { FaCalendarAlt, FaQuoteRight } from 'react-icons/fa';
 import { GoGraph } from 'react-icons/go';
+import API_URL from '../config';
 
 const OurWork = () => {
     const [events, setEvents] = useState([]);
@@ -21,7 +22,7 @@ const OurWork = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await axios.get('${API_URL}/api/events');
+                const res = await axios.get(`${API_URL}/api/events`);
                 setEvents(res.data);
                 setLoading(false);
             } catch (err) {

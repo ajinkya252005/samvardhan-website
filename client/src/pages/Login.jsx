@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaLock, FaUser, FaArrowLeft, FaHandHoldingHeart } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import API_URL from '../config';
 
 // Assets
 import logo from '../assets/Samvardhan-logo-final.png';
@@ -21,7 +22,7 @@ const Login = () => {
         setError('');
 
         try {
-            const res = await axios.post('${API_URL}/api/auth/login', {
+            const res = await axios.post(`${API_URL}/api/auth/login`, {
                 username,
                 password
             });

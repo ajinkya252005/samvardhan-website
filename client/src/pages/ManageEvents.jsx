@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaTrash, FaCalendarAlt, FaAlignLeft, FaImage, FaPlusCircle, FaClock, FaCheckCircle, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import API_URL from '../config';
 
 const ManageEvents = () => {
     const [events, setEvents] = useState([]);
@@ -21,7 +22,7 @@ const ManageEvents = () => {
     // Fetch Events
     const fetchEvents = async () => {
         try {
-            const res = await axios.get('${API_URL}/api/events');
+            const res = await axios.get(`${API_URL}/api/events`);
             setEvents(res.data);
             setLoading(false);
         } catch (err) {
@@ -59,7 +60,7 @@ const ManageEvents = () => {
             data.append('description', newEvent.description);
             data.append('image', imageFile);
 
-            await axios.post('${API_URL}/api/events', data);
+            await axios.post(`${API_URL}/api/events`, data);
 
             // Reset Form
             setNewEvent({ title: '', date: '', description: '' });

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaTrash, FaPenNib, FaLink, FaImage, FaPlusCircle, FaClock, FaCheckCircle, FaAlignLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import API_URL from '../config';
 
 const ManageBlogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -22,7 +23,7 @@ const ManageBlogs = () => {
     // Fetch Blogs
     const fetchBlogs = async () => {
         try {
-            const res = await axios.get('${API_URL}/api/blogs');
+            const res = await axios.get(`${API_URL}/api/blogs`);
             setBlogs(res.data);
             setLoading(false);
         } catch (err) {
@@ -58,7 +59,7 @@ const ManageBlogs = () => {
             data.append('link', newBlog.link);
             data.append('image', imageFile);
 
-            await axios.post('${API_URL}/api/blogs', data);
+            await axios.post(`${API_URL}/api/blogs`, data);
 
             setNewBlog({ title: '', date: '', description: '', link: '' });
             setImageFile(null);

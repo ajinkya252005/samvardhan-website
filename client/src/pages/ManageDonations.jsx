@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft, FaEye, FaCheck, FaCheckCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import API_URL from '../config';
 
 const ManageDonations = () => {
     const [donations, setDonations] = useState([]);
@@ -15,7 +16,7 @@ const ManageDonations = () => {
 
     const fetchDonations = async () => {
         try {
-            const res = await axios.get('${API_URL}/api/donations');
+            const res = await axios.get(`${API_URL}/api/donations`);
             setDonations(res.data);
             setLoading(false);
         } catch (err) {

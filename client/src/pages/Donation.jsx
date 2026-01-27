@@ -8,6 +8,7 @@ import {
 
 // Ensure you have this image in your assets folder
 import qrCode from '../assets/qr-code.jpeg'; 
+import API_URL from '../config';
 
 const Donation = () => {
     const [step, setStep] = useState(1);
@@ -56,7 +57,7 @@ const Donation = () => {
             data.append('amount', formData.amount);
             data.append('screenshot', screenshot); 
 
-            const res = await axios.post('${API_URL}/api/donations', data, {
+            const res = await axios.post(`${API_URL}/api/donations`, data, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
