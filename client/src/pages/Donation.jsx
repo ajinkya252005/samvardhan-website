@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     FaHeart, FaArrowRight, FaArrowLeft, FaUpload, FaCheckCircle, 
@@ -56,7 +56,7 @@ const Donation = () => {
             data.append('amount', formData.amount);
             data.append('screenshot', screenshot); 
 
-            const res = await axios.post('http://localhost:5000/api/donations', data, {
+            const res = await api.post('/donations', data, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { 
     FaSignOutAlt, FaCalendarAlt, FaImages, FaHandHoldingHeart, 
     FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle,FaPenNib 
@@ -28,9 +28,9 @@ const AdminDashboard = () => {
             try {
                 // Fetch all data in parallel for speed
                 const [eventsRes, photosRes, donationsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/events'),
-                    axios.get('http://localhost:5000/api/photos'),
-                    axios.get('http://localhost:5000/api/donations')
+                    api.get('/events'),
+                    api.get('/photos'),
+                    api.get('/donations')
                 ]);
 
                 // Calculate stats

@@ -33,6 +33,9 @@ app.use('/api/blogs', blogRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5000;
+app.get('/ping', (req, res) => {
+    res.send('Pong! Samvardhan Server is awake.');
+});
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
