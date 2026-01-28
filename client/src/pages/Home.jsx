@@ -171,41 +171,12 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h4 className="text-orange-500 font-bold tracking-widest uppercase mb-2 font-ubuntu">Samvardhan in a glance</h4>
-            <h2 className="text-4xl font-bold text-gray-900 font-ubuntu">Reports & Publications</h2>
+            <h2 className="text-4xl font-bold text-gray-900 font-ubuntu">Articles & Publications</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
 
-            {/* Article 2 */}
-            <div className="bg-[#FDF8F0] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group">
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={mediaAndPub2}
-                  alt="Report"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-teal-600 font-bold mb-3">
-                  <FaNewspaper /> <span>Tanmayee Deshpande</span> • <span>May 2025</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-ubuntu leading-tight">
-                  Report: Rains no longer bring joy.
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  Senior Associate, Tanmayee Deshpande, reflects on personal experiences and urgent environmental concerns in her latest article.
-                  Let’s talk about climate resilience, infrastructure, and the need for collective action before it’s too late.
-                </p>
-                <a
-                  href="https://www.linkedin.com/posts/samvardhan9_rains-no-longer-bring-joy-activity-7330936905234108416-ScMw?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAELDIskBCFYw14vzJUJa_mwed8_Y3rS0Z5o"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-orange-500 font-bold hover:text-orange-600 transition"
-                >
-                  Read Report <FaArrowRight className="ml-2 text-sm" />
-                </a>
-              </div>
-            </div>
+            
 
             {/* Article 1 */}
             <div className="bg-[#FDF8F0] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group">
@@ -237,35 +208,7 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Article 3 */}
-            <div className="bg-[#FDF8F0] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group">
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={mediaAndPub3}
-                  alt="Cleanliness Drive"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-teal-600 font-bold mb-3">
-                  <FaNewspaper /> <span>Saurabh Godbole</span> • <span>May 2025</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-ubuntu leading-tight">
-                  Rising heat, rising hope.
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  Our planet is warming, and Pune is no exception. This insightful article by our associate Saurabh Godbole highlights the urgent climate challenges our city faces and why collective action matters now more than ever.
-                </p>
-                <a
-                  href="https://www.linkedin.com/posts/samvardhan9_rising-heat-rising-hope-activity-7326104844027506690-2mjN?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAELDIskBCFYw14vzJUJa_mwed8_Y3rS0Z5o"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-orange-500 font-bold hover:text-orange-600 transition"
-                >
-                  Read Report <FaArrowRight className="ml-2 text-sm" />
-                </a>
-              </div>
-            </div>
+            
           </div>
           {/* --- NEW: Read Blogs Button --- */}
           <div className="text-center mt-12">
