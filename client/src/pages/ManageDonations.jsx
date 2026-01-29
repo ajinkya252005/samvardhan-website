@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaArrowLeft, FaEye, FaCheck, FaCheckCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaEye, FaCheck, FaCheckCircle, FaTrash } from 'react-icons/fa'; // Added FaTrash
 import { Link } from 'react-router-dom';
-import API_URL from '../config';
 
 const ManageDonations = () => {
     const [donations, setDonations] = useState([]);
@@ -16,7 +15,7 @@ const ManageDonations = () => {
 
     const fetchDonations = async () => {
         try {
-            const res = await axios.get(`${API_URL}/api/donations`);
+            const res = await axios.get('http://localhost:5000/api/donations');
             setDonations(res.data);
             setLoading(false);
         } catch (err) {
@@ -25,12 +24,12 @@ const ManageDonations = () => {
         }
     };
 
-    // --- NEW: Verify Function ---
+    // --- Verify Function (Preserved) ---
     const handleVerify = async (id) => {
         if(!window.confirm("Are you sure you want to verify this donation?")) return;
 
         try {
-            await axios.put(`${API_URL}/api/donations/${id}/verify`);
+            await axios.put(`http://localhost:5000/api/donations/${id}/verify`);
             
             // Update UI instantly (Optimistic Update)
             setDonations(donations.map(d => 
@@ -38,6 +37,21 @@ const ManageDonations = () => {
             ));
         } catch (err) {
             alert("Failed to verify. Check console.");
+            console.error(err);
+        }
+    };
+
+    // --- NEW: Delete Function ---
+    const handleDelete = async (id) => {
+        if(!window.confirm("Are you sure you want to delete this donation record permanently?")) return;
+
+        try {
+            await axios.delete(`http://localhost:5000/api/donations/${id}`);
+            
+            // Update UI instantly by removing the deleted item
+            setDonations(donations.filter(d => d._id !== id));
+        } catch (err) {
+            alert("Failed to delete. Check console.");
             console.error(err);
         }
     };
@@ -71,7 +85,7 @@ const ManageDonations = () => {
                                     <th className="p-4 font-bold text-gray-600">Contact</th>
                                     <th className="p-4 font-bold text-gray-600">Amount</th>
                                     <th className="p-4 font-bold text-gray-600">Proof</th>
-                                    <th className="p-4 font-bold text-gray-600">Action</th>
+                                    <th className="p-4 font-bold text-gray-600">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,7 +107,8 @@ const ManageDonations = () => {
                                                 <FaEye /> View
                                             </button>
                                         </td>
-                                        <td className="p-4">
+                                        <td className="p-4 flex items-center gap-3">
+                                            {/* Verify Button */}
                                             {d.isVerified ? (
                                                 <span className="flex items-center gap-1 text-green-600 font-bold text-sm">
                                                     <FaCheckCircle /> Verified
@@ -106,6 +121,15 @@ const ManageDonations = () => {
                                                     <FaCheck /> Verify
                                                 </button>
                                             )}
+
+                                            {/* Delete Button */}
+                                            <button 
+                                                onClick={() => handleDelete(d._id)}
+                                                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition"
+                                                title="Delete Donation"
+                                            >
+                                                <FaTrash />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -115,7 +139,7 @@ const ManageDonations = () => {
                 )}
             </div>
 
-            {/* --- UPDATED MODAL: Fixed Size --- */}
+            {/* --- MODAL (Preserved) --- */}
             {selectedImage && (
                 <div 
                     className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
@@ -126,7 +150,6 @@ const ManageDonations = () => {
                             &times;
                         </button>
                         
-                        {/* New Logic: Max Height 80% of viewport, keep aspect ratio */}
                         <img 
                             src={selectedImage} 
                             alt="Payment Proof" 

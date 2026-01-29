@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { 
     FaSignOutAlt, FaCalendarAlt, FaImages, FaHandHoldingHeart, 
-    FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle,FaPenNib 
+    FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle, FaPenNib 
 } from 'react-icons/fa';
-import API_URL from '../config';
+
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -13,7 +13,8 @@ const AdminDashboard = () => {
         events: 0,
         photos: 0,
         donations: 0,
-        pendingDonations: 0
+        pendingDonations: 0,
+        blogs: 0 // <--- Initialize blogs count
     });
 
     // 1. Check Auth & Fetch Stats
@@ -27,10 +28,12 @@ const AdminDashboard = () => {
         const fetchStats = async () => {
             try {
                 // Fetch all data in parallel for speed
-                const [eventsRes, photosRes, donationsRes] = await Promise.all([
-                    axios.get(`${API_URL}/api/events`),
-                    axios.get(`${API_URL}/api/photos`),
-                    axios.get(`${API_URL}/api/donations`)
+                // ADDED: axios.get('http://localhost:5000/api/blogs')
+                const [eventsRes, photosRes, donationsRes, blogsRes] = await Promise.all([
+                    axios.get('http://localhost:5000/api/events'),
+                    axios.get('http://localhost:5000/api/photos'),
+                    axios.get('http://localhost:5000/api/donations'),
+                    axios.get('http://localhost:5000/api/blogs')
                 ]);
 
                 // Calculate stats
@@ -40,7 +43,8 @@ const AdminDashboard = () => {
                     events: eventsRes.data.length,
                     photos: photosRes.data.length,
                     donations: donationsRes.data.length,
-                    pendingDonations: pending
+                    pendingDonations: pending,
+                    blogs: blogsRes.data.length // <--- Set blogs count
                 });
                 setLoading(false);
             } catch (err) {
@@ -100,7 +104,8 @@ const AdminDashboard = () => {
                 </header>
 
                 {/* --- Quick Stats Grid --- */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {/* UPDATED: Changed grid-cols to accomodate 5 items or keep 4 and wrap */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     <StatCard 
                         label="Total Events" 
                         value={stats.events} 
@@ -119,6 +124,13 @@ const AdminDashboard = () => {
                         icon={<FaHandHoldingHeart />} 
                         color="bg-teal-50 text-teal-600" 
                     />
+                    {/* NEW CARD: Total Blogs */}
+                    <StatCard 
+                        label="Total Blogs" 
+                        value={stats.blogs} 
+                        icon={<FaPenNib />} 
+                        color="bg-purple-50 text-purple-600" 
+                    />
                     <StatCard 
                         label="Pending Verification" 
                         value={stats.pendingDonations} 
@@ -133,7 +145,7 @@ const AdminDashboard = () => {
                     <h3 className="text-xl font-bold text-gray-800 mb-6 border-l-4 border-teal-500 pl-3">
                         Management Modules
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         
                         {/* 1. Manage Donations */}
                         <DashboardCard 
@@ -166,7 +178,7 @@ const AdminDashboard = () => {
                             navigate={navigate}
                         />
 
-                        {/* 4. Manage Blogs (NEW) */}
+                        {/* 4. Manage Blogs */}
                         <DashboardCard 
                             title="Blog Articles"
                             desc="Share insights and external article links."
@@ -199,7 +211,7 @@ const StatCard = ({ label, value, icon, color, highlight }) => (
 const DashboardCard = ({ title, desc, icon, path, actionText, navigate, alertCount }) => (
     <div 
         onClick={() => navigate(path)}
-        className="group bg-white rounded-2xl p-8 shadow-md hover:shadow-xl border border-gray-100 cursor-pointer transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
+        className="group bg-white rounded-2xl p-8 shadow-md hover:shadow-xl border border-gray-100 cursor-pointer transition-all duration-300 hover:-translate-y-1 relative overflow-hidden h-full flex flex-col justify-between"
     >
         {/* Background Decoration */}
         <div className="absolute -right-10 -top-10 w-32 h-32 bg-gray-50 rounded-full group-hover:scale-150 transition duration-500"></div>
@@ -223,7 +235,7 @@ const DashboardCard = ({ title, desc, icon, path, actionText, navigate, alertCou
                 {desc}
             </p>
 
-            <div className="flex items-center text-sm font-bold text-gray-400 group-hover:text-teal-600 transition gap-2">
+            <div className="flex items-center text-sm font-bold text-gray-400 group-hover:text-teal-600 transition gap-2 mt-auto">
                 {actionText} <FaArrowRight className="group-hover:translate-x-1 transition" />
             </div>
         </div>
