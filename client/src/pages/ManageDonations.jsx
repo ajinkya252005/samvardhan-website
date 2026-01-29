@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaArrowLeft, FaEye, FaCheck, FaCheckCircle, FaTrash } from 'react-icons/fa'; // Added FaTrash
 import { Link } from 'react-router-dom';
+import API_URL from '../config';
 
 const ManageDonations = () => {
     const [donations, setDonations] = useState([]);
@@ -15,7 +16,8 @@ const ManageDonations = () => {
 
     const fetchDonations = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/donations');
+            // 2. REPLACE localhost WITH API_URL
+            const res = await axios.get(`${API_URL}/api/donations`);
             setDonations(res.data);
             setLoading(false);
         } catch (err) {
@@ -29,7 +31,7 @@ const ManageDonations = () => {
         if(!window.confirm("Are you sure you want to verify this donation?")) return;
 
         try {
-            await axios.put(`http://localhost:5000/api/donations/${id}/verify`);
+            await axios.put(`${API_URL}/api/donations/${id}/verify`);
             
             // Update UI instantly (Optimistic Update)
             setDonations(donations.map(d => 
@@ -46,7 +48,7 @@ const ManageDonations = () => {
         if(!window.confirm("Are you sure you want to delete this donation record permanently?")) return;
 
         try {
-            await axios.delete(`http://localhost:5000/api/donations/${id}`);
+            await axios.delete(`${API_URL}/api/donations/${id}`);
             
             // Update UI instantly by removing the deleted item
             setDonations(donations.filter(d => d._id !== id));

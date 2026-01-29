@@ -5,6 +5,7 @@ import {
     FaSignOutAlt, FaCalendarAlt, FaImages, FaHandHoldingHeart, 
     FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle, FaPenNib 
 } from 'react-icons/fa';
+import API_URL from '../config';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -30,10 +31,10 @@ const AdminDashboard = () => {
                 // Fetch all data in parallel for speed
                 // ADDED: axios.get('http://localhost:5000/api/blogs')
                 const [eventsRes, photosRes, donationsRes, blogsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/events'),
-                    axios.get('http://localhost:5000/api/photos'),
-                    axios.get('http://localhost:5000/api/donations'),
-                    axios.get('http://localhost:5000/api/blogs')
+                    axios.get(`${API_URL}/api/events`),
+                    axios.get(`${API_URL}/api/photos`),
+                    axios.get(`${API_URL}/api/donations`),
+                    axios.get(`${API_URL}/api/blogs`)
                 ]);
 
                 // Calculate stats
