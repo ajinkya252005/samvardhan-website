@@ -1,8 +1,11 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 // Added FaHeart and FaHands to imports
-import { FaTree, FaUsers, FaHandHoldingHeart, FaLeaf, FaNewspaper, FaArrowRight, FaHeart, FaHands } from 'react-icons/fa';
+import { FaTree, FaUsers, FaHandHoldingHeart, FaLeaf, FaNewspaper, FaArrowRight, FaHeart, FaHands, FaCalendarAlt } from 'react-icons/fa';
+import axios from 'axios'; // ADDED axios
+import API_URL from '../config'; // ADDED API_URL
 
 // Import Images
 import homePageImage from '../assets/Samvardhan-home-page.jpeg';
@@ -13,6 +16,38 @@ import mediaAndPub3 from '../assets/media-and-pub-3.png';
 import logo from '../assets/PurityLogo.png';
 
 const Home = () => {
+  // --- ADDED STATE & FETCH LOGIC ---
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [eventsRes, articlesRes] = await Promise.all([
+          axios.get(`${API_URL}/api/events`),
+          axios.get(`${API_URL}/api/articles`)
+        ]);
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Filter for future events ONLY (date > today)
+        const upcoming = eventsRes.data.filter(event => {
+          const eventDate = new Date(event.date);
+          return eventDate > today;
+        });
+
+        // Sort upcoming by closest date first
+        upcoming.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        setUpcomingEvents(upcoming);
+        setArticles(articlesRes.data);
+      } catch (error) {
+        console.error("Error fetching home data:", error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="w-full bg-[#FDF8F0]">
 
@@ -166,51 +201,96 @@ const Home = () => {
         </div>
       </div>
 
-      {/* 4. MEDIA & PUBLICATIONS SECTION */}
+      {/* 4. SAMVARDHAN IN A GLANCE (Upcoming Drives & Media) */}
       <div className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
-            <h4 className="text-orange-500 font-bold tracking-widest uppercase mb-2 font-ubuntu">Samvardhan in a glance</h4>
-            <h2 className="text-4xl font-bold text-gray-900 font-ubuntu">Media & Publications</h2>
+            <h4 className="text-orange-500 font-bold tracking-widest uppercase mb-5 font-ubuntu">Samvardhan in a glance</h4>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-
+          {/* GRID LAYOUT: 1 column on mobile, 2 side-by-side on large screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
-
-            {/* Article 1 */}
-            <div className="bg-[#FDF8F0] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 group">
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={mediaAndPub1}
-                  alt="Cleanliness Drive"
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 text-sm text-teal-600 font-bold mb-3">
-                  <FaNewspaper /> <span>Indian Express</span> • <span>Sept 29, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 font-ubuntu leading-tight">
-                  How garbage issue in Pune is sparking civic sense.
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                  Samvardhan is the story of young citizens reclaiming Pune's hills. Formed in August 2024 by a group of commerce students, the initiative began with cleaning hangout spots like ARAI, Law College tekdi, and Symbiosis Hill.
-                </p>
-                <a
-                  href="https://www.linkedin.com/posts/samvardhan9_proud-moment-for-samvardhan-grateful-activity-7379014083481829376--pln?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAELDIskBCFYw14vzJUJa_mwed8_Y3rS0Z5o"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-orange-500 font-bold hover:text-orange-600 transition"
-                >
-                  Read Article <FaArrowRight className="ml-2 text-sm" />
-                </a>
+            {/* LEFT SIDE: UPCOMING DRIVES */}
+            <div className="flex flex-col h-full">
+              <h3 className="text-2xl font-bold text-teal-700 mb-6 font-ubuntu flex items-center gap-2">
+                <FaCalendarAlt /> Upcoming Drives
+              </h3>
+              
+              <div className="flex-grow bg-[#FDF8F0] p-6 rounded-2xl shadow-inner border border-gray-100">
+                {upcomingEvents.length === 0 ? (
+                  <div className="h-full flex flex-col items-center justify-center text-center py-10 opacity-70">
+                    <FaCalendarAlt className="text-6xl text-gray-300 mb-4" />
+                    <p className="text-gray-500 font-medium">No upcoming drives scheduled at the moment.</p>
+                    <p className="text-gray-400 text-sm mt-1">Check back later or view our past work!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-teal-200">
+                    {upcomingEvents.map(event => (
+                      <div key={event._id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex gap-5 hover:shadow-md transition">
+                        <div className="flex-shrink-0 w-24 h-24 bg-teal-50 rounded-lg overflow-hidden border border-teal-100">
+                          <img src={event.imageUrl} alt={event.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex flex-col justify-center">
+                          <p className="text-xs font-bold text-orange-500 mb-1 uppercase tracking-wider">
+                            {new Date(event.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                          </p>
+                          <h4 className="text-lg font-bold text-gray-800 mb-1 leading-tight">{event.title}</h4>
+                          <p className="text-gray-500 text-sm line-clamp-2">{event.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
-            
+            {/* RIGHT SIDE: MEDIA & PUBLICATIONS */}
+            <div className="flex flex-col h-full overflow-hidden w-full">
+              <h3 className="text-2xl font-bold text-teal-700 mb-6 font-ubuntu flex items-center gap-2">
+                <FaNewspaper /> Media & Publications
+              </h3>
+              
+              {articles.length === 0 ? (
+                <div className="flex-grow bg-[#FDF8F0] rounded-2xl p-6 shadow-inner border border-gray-100 flex flex-col items-center justify-center text-center opacity-70">
+                  <FaNewspaper className="text-6xl text-gray-300 mb-4" />
+                  <p className="text-gray-500 font-medium">No media publications added yet.</p>
+                </div>
+              ) : (
+                /* HORIZONTAL SCROLL CONTAINER */
+                <div className="flex overflow-x-auto gap-6 pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-orange-200 w-full">
+                  {articles.map(article => (
+                    <div key={article._id} className="min-w-[280px] max-w-[280px] md:min-w-[320px] md:max-w-[320px] bg-[#FDF8F0] rounded-xl overflow-hidden shadow-md border border-gray-100 snap-center flex flex-col group hover:-translate-y-1 transition duration-300">
+                      <div className="h-48 overflow-hidden flex-shrink-0 bg-gray-100">
+                        <img src={article.image} alt={article.title} className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500" />
+                      </div>
+                      <div className="p-5 flex flex-col flex-grow">
+                        <div className="flex justify-between items-center text-xs text-teal-600 font-bold mb-3">
+                          <span className="bg-teal-50 px-2 py-1 rounded-md">{article.publisher || "Media"}</span>
+                          <span>{new Date(article.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                        </div>
+                        <h4 className="text-lg font-bold text-gray-900 mb-3 font-ubuntu leading-tight">
+                          {article.title}
+                        </h4>
+                        <div className="mt-auto pt-4 border-t border-gray-200">
+                          {article.link ? (
+                            <a href={article.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-orange-500 font-bold text-sm hover:text-orange-600 transition group-hover:gap-2">
+                              Read Article <FaArrowRight className="ml-1" />
+                            </a>
+                          ) : (
+                            <span className="text-gray-400 text-sm italic">Offline Publication</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
           </div>
-          {/* --- NEW: Read Blogs Button --- */}
+          
+          {/* Blogs Button */}
           <div className="text-center mt-12">
             <Link to="/blogs">
               <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-orange-200 transition-all transform hover:-translate-y-1 flex items-center gap-2 mx-auto font-ubuntu">
@@ -218,10 +298,9 @@ const Home = () => {
               </button>
             </Link>
           </div>
-          {/* ------------------------------- */}
-
         </div>
       </div>
+
 
       {/* 5. CALL TO ACTION */}
       <div className="bg-teal-700 py-16 text-center text-white relative overflow-hidden">

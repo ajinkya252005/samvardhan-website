@@ -8,12 +8,14 @@ const photoRoutes = require('./routes/photoRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const authRoutes = require('./routes/authRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const articleRoutes = require('./routes/articleRoutes');
 
 const app = express();
 
 // Middleware (Allows the frontend to talk to the backend)
 app.use(cors());
 app.use(express.json());
+
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
@@ -30,6 +32,7 @@ app.use('/api/photos', photoRoutes);
 app.use('/api/donations', donationRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/blogs', blogRoutes);
+app.use('/api/articles', articleRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5000;
