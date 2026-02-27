@@ -18,6 +18,7 @@ import ManageEvents from './pages/ManageEvents';
 import ManageGallery from './pages/ManageGallery';
 import Blogs from './pages/Blogs';
 import ManageBlogs from './pages/ManageBlogs';
+import DirectorsDesk from './pages/DirectorsDesk'; // <--- Import New Page
 
 // --- Layout Component ---
 // This acts as a wrapper for pages that NEED the Navbar and Footer
@@ -47,6 +48,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/donate" element={<Donation />} />
             <Route path="/blogs" element={<Blogs />} />  {/* <--- ADD THIS */}
+            <Route path="/about-us" element={<DirectorsDesk />} /> {/* <--- Add Route */}
           </Route>
         
 

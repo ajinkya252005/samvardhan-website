@@ -59,4 +59,20 @@ router.put('/:id/verify', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedDonation = await Donation.findByIdAndDelete(id);
+
+        if (!deletedDonation) {
+            return res.status(404).json({ message: 'Donation not found' });
+        }
+
+        res.status(200).json({ message: 'Donation deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting donation:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 module.exports = router;
