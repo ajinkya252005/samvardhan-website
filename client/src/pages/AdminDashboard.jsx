@@ -31,7 +31,7 @@ const AdminDashboard = () => {
             try {
                 // Fetch all data in parallel for speed
                 // ADDED: axios.get('http://localhost:5000/api/blogs')
-                const [eventsRes, photosRes, donationsRes, blogsRes] = await Promise.all([
+                const [eventsRes, photosRes, donationsRes, blogsRes, articlesRes] = await Promise.all([
                     axios.get(`${API_URL}/api/events`),
                     axios.get(`${API_URL}/api/photos`),
                     axios.get(`${API_URL}/api/donations`),
