@@ -7,10 +7,11 @@ import logo from '../assets/Samvardhan-logo-final.png';
 const NAV_LINKS = [
     { name: 'Home', path: '/' },
     { name: 'Director\'s Desk', path: '/about-us' },
+    { name: 'About Us', path: '/about' },
     { name: 'Our Work', path: '/work' },
     { name: 'Blogs', path: '/blogs' },
     { name: 'Gallery', path: '/gallery' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Contact', path: '/contact' }
 ];
 
 const Navbar = () => {

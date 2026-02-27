@@ -5,6 +5,13 @@ import { motion } from 'framer-motion';
 import logo from '../assets/Samvardhan-logo-final.png'; // Assuming same logo path
 
 const Footer = () => {
+    // Define the exact paths to match your App.jsx routes
+    const footerLinks = [
+        { name: 'Our Work', path: '/work' },
+        { name: 'About Us', path: '/about' },
+        { name: 'Director Desk', path: '/contact' }
+    ];
+
     return (
         <footer className="bg-white border-t border-teal-100 pt-16 pb-8 font-ubuntu relative overflow-hidden">
             
@@ -45,13 +52,13 @@ const Footer = () => {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="flex flex-wrap justify-center gap-4"
                     >
-                        {['Our Work', 'Gallery', 'Donate'].map((item) => (
+                        {footerLinks.map((item) => (
                             <Link 
-                                key={item}
-                                to={`/${item.toLowerCase().replace(' ', '')}`} 
+                                key={item.name}
+                                to={item.path} 
                                 className="px-5 py-2 rounded-full text-gray-600 hover:text-teal-700 hover:bg-teal-50 transition-all duration-300 text-sm font-bold border border-transparent hover:border-teal-100"
                             >
-                                {item}
+                                {item.name}
                             </Link>
                         ))}
                     </motion.div>
