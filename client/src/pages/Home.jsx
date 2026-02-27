@@ -99,7 +99,7 @@ const Home = () => {
           {/* Existing Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">10+</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">15+</h3>
               <p className="text-gray-500 mt-2 font-medium">Cleanliness Drives</p>
             </div>
             <div className="p-4">
@@ -107,11 +107,11 @@ const Home = () => {
               <p className="text-gray-500 mt-2 font-medium">Volunteers</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">1 Yr</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">2 Yr</h3>
               <p className="text-gray-500 mt-2 font-medium">Of Consistency</p>
             </div>
             <div className="p-4">
-              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">5+</h3>
+              <h3 className="text-4xl font-bold text-teal-600 font-ubuntu">7+</h3>
               <p className="text-gray-500 mt-2 font-medium">Community Drives</p>
             </div>
           </div>
@@ -171,7 +171,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h4 className="text-orange-500 font-bold tracking-widest uppercase mb-2 font-ubuntu">Samvardhan in a glance</h4>
-            <h2 className="text-4xl font-bold text-gray-900 font-ubuntu">Articles & Publications</h2>
+            <h2 className="text-4xl font-bold text-gray-900 font-ubuntu">Media & Publications</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
