@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { 
-    FaSignOutAlt, FaCalendarAlt, FaImages, FaHandHoldingHeart, 
-    FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle, FaPenNib 
+import {
+    FaSignOutAlt, FaCalendarAlt, FaImages, FaHandHoldingHeart,
+    FaUserShield, FaSpinner, FaArrowRight, FaExclamationCircle, FaPenNib, FaNewspaper
 } from 'react-icons/fa';
 import API_URL from '../config';
 
@@ -15,7 +15,8 @@ const AdminDashboard = () => {
         photos: 0,
         donations: 0,
         pendingDonations: 0,
-        blogs: 0 // <--- Initialize blogs count
+        blogs: 0,
+        articles: 0// <--- Initialize blogs count
     });
 
     // 1. Check Auth & Fetch Stats
@@ -34,7 +35,8 @@ const AdminDashboard = () => {
                     axios.get(`${API_URL}/api/events`),
                     axios.get(`${API_URL}/api/photos`),
                     axios.get(`${API_URL}/api/donations`),
-                    axios.get(`${API_URL}/api/blogs`)
+                    axios.get(`${API_URL}/api/blogs`),
+                    axios.get(`${API_URL}/api/articles`)
                 ]);
 
                 // Calculate stats
@@ -45,7 +47,8 @@ const AdminDashboard = () => {
                     photos: photosRes.data.length,
                     donations: donationsRes.data.length,
                     pendingDonations: pending,
-                    blogs: blogsRes.data.length // <--- Set blogs count
+                    blogs: blogsRes.data.length, // <--- Set blogs count
+                    articles: articlesRes.data.length
                 });
                 setLoading(false);
             } catch (err) {
@@ -58,7 +61,7 @@ const AdminDashboard = () => {
     }, [navigate]);
 
     const handleLogout = () => {
-        if(window.confirm("Are you sure you want to logout?")) {
+        if (window.confirm("Are you sure you want to logout?")) {
             localStorage.removeItem('isAdmin');
             localStorage.removeItem('adminToken');
             navigate('/login');
@@ -73,7 +76,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 font-ubuntu">
-            
+
             {/* --- Top Navbar --- */}
             <nav className="bg-white shadow-sm border-b border-gray-200 px-6 py-4 sticky top-0 z-10">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -86,7 +89,7 @@ const AdminDashboard = () => {
                             <span className="text-xs text-gray-500 font-medium tracking-wider">SAMVARDHAN</span>
                         </div>
                     </div>
-                    <button 
+                    <button
                         onClick={handleLogout}
                         className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition font-medium text-sm"
                     >
@@ -97,7 +100,7 @@ const AdminDashboard = () => {
             </nav>
 
             <div className="max-w-7xl mx-auto p-6 lg:p-10 space-y-10">
-                
+
                 {/* --- Welcome Section --- */}
                 <header>
                     <h2 className="text-3xl font-bold text-gray-800">Dashboard Overview</h2>
@@ -107,36 +110,42 @@ const AdminDashboard = () => {
                 {/* --- Quick Stats Grid --- */}
                 {/* UPDATED: Changed grid-cols to accomodate 5 items or keep 4 and wrap */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                    <StatCard 
-                        label="Total Events" 
-                        value={stats.events} 
-                        icon={<FaCalendarAlt />} 
-                        color="bg-blue-50 text-blue-600" 
+                    <StatCard
+                        label="Total Events"
+                        value={stats.events}
+                        icon={<FaCalendarAlt />}
+                        color="bg-blue-50 text-blue-600"
                     />
-                    <StatCard 
-                        label="Gallery Photos" 
-                        value={stats.photos} 
-                        icon={<FaImages />} 
-                        color="bg-orange-50 text-orange-600" 
+                    <StatCard
+                        label="Gallery Photos"
+                        value={stats.photos}
+                        icon={<FaImages />}
+                        color="bg-orange-50 text-orange-600"
                     />
-                    <StatCard 
-                        label="Total Donations" 
-                        value={stats.donations} 
-                        icon={<FaHandHoldingHeart />} 
-                        color="bg-teal-50 text-teal-600" 
+                    <StatCard
+                        label="Total Donations"
+                        value={stats.donations}
+                        icon={<FaHandHoldingHeart />}
+                        color="bg-teal-50 text-teal-600"
                     />
                     {/* NEW CARD: Total Blogs */}
-                    <StatCard 
-                        label="Total Blogs" 
-                        value={stats.blogs} 
-                        icon={<FaPenNib />} 
-                        color="bg-purple-50 text-purple-600" 
+                    <StatCard
+                        label="Total Blogs"
+                        value={stats.blogs}
+                        icon={<FaPenNib />}
+                        color="bg-purple-50 text-purple-600"
                     />
-                    <StatCard 
-                        label="Pending Verification" 
-                        value={stats.pendingDonations} 
-                        icon={<FaExclamationCircle />} 
-                        color="bg-red-50 text-red-600" 
+                    <StatCard
+                        label="Media/Articles"
+                        value={stats.articles}
+                        icon={<FaNewspaper />}
+                        color="bg-indigo-50 text-indigo-600"
+                    />
+                    <StatCard
+                        label="Pending Verification"
+                        value={stats.pendingDonations}
+                        icon={<FaExclamationCircle />}
+                        color="bg-red-50 text-red-600"
                         highlight={stats.pendingDonations > 0}
                     />
                 </div>
@@ -147,9 +156,9 @@ const AdminDashboard = () => {
                         Management Modules
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        
+
                         {/* 1. Manage Donations */}
-                        <DashboardCard 
+                        <DashboardCard
                             title="Donation Requests"
                             desc="View proof screenshots and verify donor payments."
                             icon={<FaHandHoldingHeart className="text-4xl text-teal-500 group-hover:scale-110 transition duration-300" />}
@@ -160,7 +169,7 @@ const AdminDashboard = () => {
                         />
 
                         {/* 2. Manage Events */}
-                        <DashboardCard 
+                        <DashboardCard
                             title="Timeline Events"
                             desc="Add new initiatives or update the 'Our Work' timeline."
                             icon={<FaCalendarAlt className="text-4xl text-blue-500 group-hover:scale-110 transition duration-300" />}
@@ -170,7 +179,7 @@ const AdminDashboard = () => {
                         />
 
                         {/* 3. Manage Gallery */}
-                        <DashboardCard 
+                        <DashboardCard
                             title="Photo Gallery"
                             desc="Upload event photos to showcase impact."
                             icon={<FaImages className="text-4xl text-orange-500 group-hover:scale-110 transition duration-300" />}
@@ -180,12 +189,20 @@ const AdminDashboard = () => {
                         />
 
                         {/* 4. Manage Blogs */}
-                        <DashboardCard 
+                        <DashboardCard
                             title="Blog Articles"
                             desc="Share insights and external article links."
                             icon={<FaPenNib className="text-4xl text-purple-500 group-hover:scale-110 transition duration-300" />}
                             path="/admin/blogs"
                             actionText="Manage Blogs"
+                            navigate={navigate}
+                        />
+                        <DashboardCard
+                            title="Media & Publications"
+                            desc="Upload newspaper clippings and media features."
+                            icon={<FaNewspaper className="text-4xl text-indigo-500 group-hover:scale-110 transition duration-300" />}
+                            path="/admin/articles"
+                            actionText="Manage Media"
                             navigate={navigate}
                         />
                     </div>
@@ -210,7 +227,7 @@ const StatCard = ({ label, value, icon, color, highlight }) => (
 );
 
 const DashboardCard = ({ title, desc, icon, path, actionText, navigate, alertCount }) => (
-    <div 
+    <div
         onClick={() => navigate(path)}
         className="group bg-white rounded-2xl p-8 shadow-md hover:shadow-xl border border-gray-100 cursor-pointer transition-all duration-300 hover:-translate-y-1 relative overflow-hidden h-full flex flex-col justify-between"
     >
@@ -228,7 +245,7 @@ const DashboardCard = ({ title, desc, icon, path, actionText, navigate, alertCou
                     </span>
                 )}
             </div>
-            
+
             <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-teal-700 transition">
                 {title}
             </h3>

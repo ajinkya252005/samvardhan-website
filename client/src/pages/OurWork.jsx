@@ -23,7 +23,18 @@ const OurWork = () => {
         const fetchEvents = async () => {
             try {
                 const res = await axios.get(`${API_URL}/api/events`);
-                setEvents(res.data);
+                
+                // Get today's date and set time to midnight for accurate comparison
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                // Filter for past/present events ONLY (date <= today)
+                const pastEvents = res.data.filter(event => {
+                    const eventDate = new Date(event.date);
+                    return eventDate <= today;
+                });
+
+                setEvents(pastEvents);
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching events:", err);
