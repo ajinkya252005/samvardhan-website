@@ -8,7 +8,7 @@ import axios from 'axios'; // ADDED axios
 import API_URL from '../config'; // ADDED API_URL
 
 // Import Images
-import homePageImage from '../assets/Samvardhan-home-page.jpeg';
+import homePageImage from '../assets/Samvardhan-home-page.png';
 import aboutUsImage from '../assets/about-us.png';
 import mediaAndPub1 from '../assets/media-and-pub-1.png';
 import mediaAndPub2 from '../assets/media-and-pub-2.png';
