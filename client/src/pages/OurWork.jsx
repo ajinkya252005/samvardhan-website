@@ -3,7 +3,7 @@ import axios from 'axios';
 import { motion, useSpring, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import { FaCalendarAlt, FaTimes } from 'react-icons/fa';
 import { GoGraph } from 'react-icons/go';
-
+import API_URL from '../config';
 const OurWork = () => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,7 +15,7 @@ const OurWork = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/events');
+                const res = await axios.get(`${API_URL}/api/events`);
                 
                 // 1. Get today's date
                 const today = new Date();
