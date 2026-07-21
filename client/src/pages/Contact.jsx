@@ -82,6 +82,9 @@ const Contact = () => {
                                 <a href="tel:+917620334946" className="hover:text-white hover:translate-x-1 transition-all">
                                     Krishna: +91 76203 34946
                                 </a>
+                                <a href="tel:+916204436657" className="hover:text-white hover:translate-x-1 transition-all">
+                                    Yash Raj: +91 62044 36657
+                                </a>
                             </div>
                         </div>
 
